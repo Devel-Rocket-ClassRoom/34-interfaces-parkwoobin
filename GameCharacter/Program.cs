@@ -21,11 +21,11 @@ void ProcessBattle(IAttacker attacker, IDefender defender)
 {
     attacker.Attack(defender);
 
-    Console.WriteLine($"{attacker.Name}이(가) {defender.Name}에게 {attacker.AttackPower} 대미지! ({defender.Name} hp: {defender.CurrentHp}/{defender.MaxHp})");
+    Console.WriteLine($"{attacker.ToString()}(이/가) {defender.ToString()}에게 {attacker.AttackPower} 대미지! ({defender.ToString()} hp: {defender.CurrentHp}/{defender.MaxHp})");
 
     if (defender.IsDead)
     {
-        Console.WriteLine($"{defender.Name}이(가) 쓰러졌습니다!");
+        Console.WriteLine($"{defender.ToString()}(이/가) 쓰러졌습니다!");
     }
 
 }
@@ -35,13 +35,11 @@ void ProcessBattle(IAttacker attacker, IDefender defender)
 
 interface IAttacker
 {
-    string Name { get; }
     int AttackPower { get; }
     void Attack(IDefender target);
 }
 interface IDefender
 {
-    string Name { get; }
     int CurrentHp { get; }
     int MaxHp { get; }
     bool IsDead { get; }
@@ -78,6 +76,10 @@ class Character : IAttacker, IDefender
             Console.WriteLine($"{Name}이(가) 쓰러졌습니다!");
         }
     }
+    public override string ToString()
+    {
+        return $"{Name}";
+    }
 }
 
 class Monster : IAttacker, IDefender
@@ -109,5 +111,9 @@ class Monster : IAttacker, IDefender
             CurrentHp = 0;
             IsDead = true;
         }
+    }
+    public override string ToString()
+    {
+        return $"{Name}";
     }
 }
